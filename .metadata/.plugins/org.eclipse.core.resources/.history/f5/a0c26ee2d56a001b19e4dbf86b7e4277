@@ -1,0 +1,46 @@
+package dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import metier.entities.Potterie;
+
+public class PotterieDaoImpl implements PotterieDao {
+
+	@Override
+	public Potterie save(Potterie p) {
+		// TODO Auto-generated method stub
+		return p;
+	}
+
+	@Override
+	public List<Potterie> nmPotterie(String nm) {
+		List<Potterie> pList = new ArrayList<>();
+		return pList;
+	}
+
+	@Override
+	public Potterie getPotterie(Potterie id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Potterie> getPotterie() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updatePotterie(Potterie p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

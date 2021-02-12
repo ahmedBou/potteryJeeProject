@@ -1,0 +1,14 @@
+package web;
+
+import dao.PotterieDaoImpl;
+
+public class PotServlet {
+	
+	PotterieDaoImpl metier = new PotterieDaoImpl();
+	
+	metier.save();
+	
+	
+	
+
+}

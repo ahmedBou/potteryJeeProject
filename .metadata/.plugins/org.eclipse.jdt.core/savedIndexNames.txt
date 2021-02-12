@@ -1,0 +1,8 @@
+INDEX VERSION 1.131+C:\Users\Admin\eclipse-workspace-jee\briefPottryJee\.metadata\.plugins\org.eclipse.jdt.core
+1185701362.index
+1744635168.index
+2516663821.index
+2650046765.index
+366482308.index
+1449168046.index
+3605819508.index

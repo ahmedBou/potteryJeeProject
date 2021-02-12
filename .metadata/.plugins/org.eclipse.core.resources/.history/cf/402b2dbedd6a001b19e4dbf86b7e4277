@@ -1,0 +1,10 @@
+package web;
+
+import dao.PotterieDaoImpl;
+import metier.entities.Potterie;
+
+public class PotServlet extends HTTPServ{
+	PotterieDaoImpl metier = new PotterieDaoImpl();
+	
+	Potterie modelPot = metier.save(new Potterie("spath", 0, 0));
+}
