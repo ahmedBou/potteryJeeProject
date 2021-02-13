@@ -14,24 +14,24 @@ public class PotterieDaoImpl implements PotterieDao {
 	@Override
 	public Potterie save(Potterie p) {
 		Connection connection = SingletonConnection.getConnection();
-		//String SQL_SELECT = "Select * ";
-		
+		// String SQL_SELECT = "Select * ";
+
 		try {
-			PreparedStatement ps = connection.prepareStatement(""
-					+ "INSERT INTO products(nom,quantite, prix, vote)VALUES(?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement(
+					"" + "INSERT INTO products(nom,quantite, prix,images,description)VALUES(?,?,?,?,?)");
 			ps.setString(1, p.getNom());
 			ps.setInt(2, p.getQuantite());
 			ps.setDouble(3, p.getPrix());
-			ps.setDouble(4, p.getVotes());
+			ps.setBytes(4, p.getImages());
+			ps.setString(5, p.getDescription());
 			ps.executeUpdate();
-			PreparedStatement ps2 = connection.prepareStatement(""
-					+ "SELECT MAX(id) as MAX_ID FROM plantes");
+			PreparedStatement ps2 = connection.prepareStatement("" + "SELECT MAX(id) as MAX_ID FROM plantes");
 			ResultSet rs = ps2.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				p.setId(rs.getLong("MAX_ID"));
 			}
-			
+
 			// fermer l'objet preparedStatement
 			ps.close();
 			ps2.close();
@@ -39,16 +39,16 @@ public class PotterieDaoImpl implements PotterieDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return p;
 	}
 
 	@Override
 	public List<Potterie> nmPotterie(String nm) {
 		List<Potterie> pList = new ArrayList<Potterie>();
-		Potterie pr = new Potterie(0, nm, 1, 2, 0);
-		pList.add(pr);
-		
+//		Potterie pr = new Potterie(0, nm, 1, 2, 0);
+//		pList.add(pr);
+
 		return pList;
 	}
 
@@ -60,41 +60,44 @@ public class PotterieDaoImpl implements PotterieDao {
 
 	@Override
 	public ArrayList<Potterie> getPotterie() {
-		ArrayList<Potterie> plantes = new ArrayList<Potterie>();
-		Connection connection = SingletonConnection.getConnection();
+		ArrayList<Potterie> pottery = new ArrayList<Potterie>();
+		Connection connection = null;
+		PreparedStatement sp = null;
+		ResultSet rs = null;
 		try {
-			PreparedStatement sp = connection.prepareStatement("select * from products");
-			ResultSet rs = sp.executeQuery();
-			while(rs.next()) {
-				long a = rs.getInt(1);
-				String d = rs.getString(2);
-				int c = rs.getInt(3);
-				double b = rs.getDouble(4);
-				int v = rs.getInt(5);
-				Potterie  p = new Potterie(a, d, c, b, v);
-				plantes.add(p);	
+			connection = SingletonConnection.getConnection();
+			String query = "SELECT * FROM products";
+			sp = connection.prepareStatement(query);
+			rs = sp.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String nom = rs.getString(2);
+				int quant = rs.getInt(3);
+				double prix = rs.getDouble(4);
+				byte[] images = rs.getBytes(5);
+				String desc = rs.getString(6);
+				Potterie p = new Potterie(id, nom, quant, prix, images, desc);
+				pottery.add(p);
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return plantes;
-	
+		return pottery;
+
 	}
 
 	@Override
 	public void updatePotterie(Potterie p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -7,13 +7,13 @@ import java.sql.SQLException;
 public class SingletonConnection {
 	
 
-		private static Connection connection;
+		public static Connection connection;
 		
 		// quand une class est chargée au mémoire, c'est le bloc static qui s'execute le premier
 		static {
 			//pr creer la connection, j'ai besoin de charger le pilote jdbc
 			try { 
-
+				Class.forName("org.postgresql.Driver");
 				connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/potteryDb", "postgres", "admin");
 			} catch (Exception e) { // si le pilote n'existe pas
 				// TODO Auto-generated catch block
