@@ -20,6 +20,12 @@ public class Potterie {
 	}
 	
 	
+	public Potterie() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public Potterie(String nom, int quantite, double prix, byte[] images, String description) {
 		super();
 		this.nom = nom;

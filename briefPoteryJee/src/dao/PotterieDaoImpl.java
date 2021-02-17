@@ -14,23 +14,30 @@ public class PotterieDaoImpl implements PotterieDao {
 	@Override
 	public Potterie save(Potterie p) {
 		Connection connection = SingletonConnection.getConnection();
-		// String SQL_SELECT = "Select * ";
 
 		try {
-			PreparedStatement ps = connection.prepareStatement(
-					"" + "INSERT INTO products(nom,quantite, prix,images,description)VALUES(?,?,?,?,?)");
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO products(nom,quantite, prix,images,\"desc\")VALUES(?,?,?,?,?)");
+			
+			System.out.println(ps);
 			ps.setString(1, p.getNom());
 			ps.setInt(2, p.getQuantite());
 			ps.setDouble(3, p.getPrix());
 			ps.setBytes(4, p.getImages());
 			ps.setString(5, p.getDescription());
 			ps.executeUpdate();
-			PreparedStatement ps2 = connection.prepareStatement("" + "SELECT MAX(id) as MAX_ID FROM plantes");
+			PreparedStatement ps2 = connection.prepareStatement("" +
+			                             "SELECT MAX(idproducts) as MAX_ID FROM products");
+			
 			ResultSet rs = ps2.executeQuery();
+			System.out.println(p.getNom());
+			System.out.println(p.getQuantite());
+			System.out.println(p.getImages());
+			System.out.println(p.getDescription());
 
 			if (rs.next()) {
 				p.setId(rs.getLong("MAX_ID"));
 			}
+			System.out.println(ps);
 
 			// fermer l'objet preparedStatement
 			ps.close();
@@ -45,18 +52,37 @@ public class PotterieDaoImpl implements PotterieDao {
 
 	@Override
 	public List<Potterie> nmPotterie(String nm) {
-		List<Potterie> pList = new ArrayList<Potterie>();
-//		Potterie pr = new Potterie(0, nm, 1, 2, 0);
-//		pList.add(pr);
+		List <Potterie> potterie = new ArrayList<Potterie>();
+		Connection connection = SingletonConnection.getConnection();
+		try {
+			PreparedStatement ps = connection.prepareStatement(""
+					+ "SELECT * FROM products WHERE nom LIKE ?");
+			
+			ps.setString(1, nm);
+			System.out.println(ps);
+			// execute la requette
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Potterie p = new Potterie();
+				p.setId(rs.getLong("idproducts"));
+				p.setNom(rs.getString("nom"));
+				p.setQuantite(rs.getInt("quantite"));
+				p.setPrix(rs.getDouble("prix"));
+				p.setImages(rs.getBytes("images"));
+				potterie.add(p);
+			}
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// apres la creation du plantes et le stockage je retourne la liste des plantes
+		return potterie;
 
-		return pList;
 	}
 
-	@Override
-	public Potterie getPotterie(Potterie id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+	
 
 	@Override
 	public ArrayList<Potterie> getPotterie() {
@@ -68,6 +94,7 @@ public class PotterieDaoImpl implements PotterieDao {
 			connection = SingletonConnection.getConnection();
 			String query = "SELECT * FROM products";
 			sp = connection.prepareStatement(query);
+			System.out.println(sp);
 			rs = sp.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt(1);
@@ -89,15 +116,89 @@ public class PotterieDaoImpl implements PotterieDao {
 	}
 
 	@Override
-	public void updatePotterie(Potterie p) {
-		// TODO Auto-generated method stub
+	public Potterie updatePotterie(Potterie p) {
+		Connection connection = SingletonConnection.getConnection();
+
+		try {                                         
+			PreparedStatement ps = connection.prepareStatement("UPDATE public.products SET nom=?, quantite=?, prix=?, images=?, \"desc\"=?\r\n"
+					+ "	WHERE idproducts=?");
+			
+			System.out.println(ps);
+			
+			ps.setString(1, p.getNom());
+			ps.setInt(2, p.getQuantite());
+			ps.setDouble(3, p.getPrix());
+			ps.setBytes(4, p.getImages());
+			ps.setString(5, p.getDescription());
+			ps.setLong(6, p.getId());
+			ps.executeUpdate();
+
+			// fermer l'objet preparedStatement
+			ps.close();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return p;
 
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
+		Connection connection = SingletonConnection.getConnection();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("delete from products where idproducts=?");
+		
+			
+			
+			ps.setLong(1, id);
+			System.out.println(id);
+			System.out.println(ps);
+	
+	
+			ps.executeUpdate();
+			// fermer l'objet preparedStatement
+			ps.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
+
+	@Override
+	public Potterie getPotterie(Long id) {
+
+			Potterie prd = null;
+			Connection connection = SingletonConnection.getConnection();
+			try {
+				PreparedStatement ps = connection.prepareStatement(""
+						+ "select * FROM products WHERE idproducts=?");
+				
+				ps.setLong(1, id); 
+				// execute la requette
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					prd = new Potterie();
+					prd.setId(rs.getLong("idproducts"));
+					prd.setNom(rs.getString("nom"));
+					prd.setQuantite(rs.getInt("quantite"));
+					prd.setPrix(rs.getDouble("prix"));
+					prd.setImages(rs.getBytes("images"));
+				
+				}
+				ps.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// apres la creation du plantes et le stockage je retourne la liste des plantes
+			return prd ;
+		}
+
 
 }

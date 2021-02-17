@@ -14,13 +14,13 @@ public interface PotterieDao {
 	public  List<Potterie> nmPotterie(String nm);
 	
 	// display only one products
-	public Potterie getPotterie(Potterie id);
+	public Potterie getPotterie(Long id);
 	
 	// display the list of products
 	public ArrayList<Potterie> getPotterie();
 	
 	// Modify the product , also his id
-	public void updatePotterie(Potterie p);
+	public Potterie updatePotterie(Potterie p);
 	
 	// delete the product
 	public void delete(long id);
