@@ -1,0 +1,37 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.annotation.WebServlet;
+
+import metier.entities.User;
+
+public class UserLoginImpl implements UserLogin {
+
+	@Override
+	public User userLogin(String username, String password) throws ClassNotFoundException, SQLException {
+		Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        User current_Person = null;
+        try {
+        	connection = SingletonConnection.getConnection();
+        	String query_Authentication = "select * from person where email=? and password=?";
+            statement = connection.prepareStatement(query_Authentication);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	current_Person = new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+       
+        return current_Person;
+	}
+
+}

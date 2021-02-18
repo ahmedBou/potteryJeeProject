@@ -200,5 +200,29 @@ public class PotterieDaoImpl implements PotterieDao {
 			return prd ;
 		}
 
+	@Override
+	public int getVotePrd(long id) {
+		Connection connection;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int count = 0;
+        try {
+        	connection = SingletonConnection.getConnection();
+            String query_Count = "SELECT count (personid)\r\n"
+            		+ "	FROM public.vote where idproducts= ?";
+            statement = connection.prepareStatement(query_Count);
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+                
+            }
+            System.out.println(count);
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+		return count;
+	}
+
 
 }

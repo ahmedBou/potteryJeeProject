@@ -39,6 +39,8 @@
 							    <span class="card-title">Quantité: <b>${p.quantite}</b></span>
 							    <span class="card-title">Prix: <b>${p.prix}</b></span><br>
 							    <span class="card-title">description: <b>${p.description}</b></span><br>
+							    <span class="card-title">vote: <b>${count}</b></span><br>
+							    
 							    <span class="card-title"><a onclick="return confirm('Etes vous sure de supprimer le prduit?!')" href="delete.do?id=${p.id}">delete</a></b></span><br>
 							    <span class="card-title"><a href="editPr.do?id=${p.id}">update</a></b></span><br>
 							   
@@ -48,7 +50,7 @@
 						</div>
 					</c:forEach>
 		
-	
+		
 				</div>
 			
 			</div>

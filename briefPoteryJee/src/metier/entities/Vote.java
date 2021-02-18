@@ -4,11 +4,18 @@ public class Vote {
 	private Long personid;
 	private Long idproducts;
 	
+	public static int countVote= 0;
+	
+
 	public Vote(Long personid, Long idproducts) {
 		super();
 		this.personid = personid;
 		this.idproducts = idproducts;
+		countVote++;
 	}
+
+
+
 	
 	public Long getPersonid() {
 		return personid;
@@ -22,6 +29,10 @@ public class Vote {
 	public void setIdproducts(Long idproducts) {
 		this.idproducts = idproducts;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Vote [personid=" + personid + ", idproducts=" + idproducts + ", countVote=" + countVote + "]";
+	}
 
 }

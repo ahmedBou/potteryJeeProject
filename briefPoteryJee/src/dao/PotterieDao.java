@@ -25,4 +25,7 @@ public interface PotterieDao {
 	// delete the product
 	public void delete(long id);
 	
+	// getVote
+	public int getVotePrd(long id); 
+	
 }
