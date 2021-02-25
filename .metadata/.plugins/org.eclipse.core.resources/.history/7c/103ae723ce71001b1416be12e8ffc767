@@ -1,0 +1,11 @@
+package dao;
+
+//import java.sql.SQLException; 
+
+public interface VoteDao {
+	
+	
+//	public VoteProduct getProductVote(int id);
+//	public void setProductVote(int id_user,int id_prd) throws SQLException;
+
+}

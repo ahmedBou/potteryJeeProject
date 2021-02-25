@@ -24,23 +24,18 @@ public class VoteController extends HttpServlet {
         metier =  new VoteForProductsImpl();
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 			int personid = Integer.parseInt(request.getParameter("personid"));
 			int productid = Integer.parseInt(request.getParameter("productid"));
 			
 			System.out.println(personid);
 			System.out.println(productid);
-			
-			
+				
 			metier.makeVote(personid, productid);
-			
-			
-
-		
+			request.getRequestDispatcher("userView.jsp").forward(request,response);
+								
 	}
 
 }

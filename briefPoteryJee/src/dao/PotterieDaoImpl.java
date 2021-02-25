@@ -81,9 +81,6 @@ public class PotterieDaoImpl implements PotterieDao {
 
 	}
 
-	
-	
-
 	@Override
 	public ArrayList<Potterie> getPotterie() {
 		ArrayList<Potterie> pottery = new ArrayList<Potterie>();

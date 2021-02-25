@@ -15,4 +15,8 @@
 		
 	</servlet-mapping> -->
 	
+	<welcome-file-list>
+		<welcome-file>Default</welcome-file>
+	</welcome-file-list>
+	
 </web-app>

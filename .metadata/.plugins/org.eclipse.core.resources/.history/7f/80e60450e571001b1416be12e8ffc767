@@ -1,0 +1,13 @@
+package dao;
+
+import metier.entities.Vote;
+
+//import java.sql.SQLException; 
+
+public interface VoteDao {
+	
+	
+	public Vote getUserProductVote(int idUser, int idPrd );
+
+
+}

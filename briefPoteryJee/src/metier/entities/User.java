@@ -7,6 +7,10 @@ public class User {
 	private String email;
 	private String password;
 	private int role;
+	
+	public User() {
+		super();
+	}
 	public User(Long personid, String nom, String prenom, String email, String password, int role) {
 		super();
 		this.personid = personid;

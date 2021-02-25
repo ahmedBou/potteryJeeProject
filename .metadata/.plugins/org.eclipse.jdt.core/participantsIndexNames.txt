@@ -1,5 +1,3 @@
 INDEX VERSION 1.131
-C:\Users\Admin\eclipse-workspace-jee\briefPottryJee\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4208842108.index
-\pepiniereCrud\src
 C:\Users\Admin\eclipse-workspace-jee\briefPottryJee\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4209014464.index
 \briefPoteryJee\src

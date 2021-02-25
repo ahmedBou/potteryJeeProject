@@ -43,17 +43,22 @@ public class PotteryController extends HttpServlet {
 		String path = request.getServletPath();
 		System.out.println("the path is "+path);
 		
-		if(path.equals("/index.do")) {
-			ArrayList<Potterie> getProd = metier.getPotterie();
-			HttpSession session = request.getSession();
-			session.setAttribute("data", getProd);
-			request.getRequestDispatcher("adminView.jsp").forward(request,response);
+		if(path.equals("/")) {
+			System.out.println(path);
+//			ArrayList<Potterie> getProd = metier.getPotterie();
+//			HttpSession session = request.getSession();
+//			session.setAttribute("data", getProd);
+//			request.getRequestDispatcher("adminView.jsp").forward(request,response);
+			
+			
+			request.getRequestDispatcher("login.jsp").forward(request,response);
 		
 		}else if(path.equals("/indexUser.do")) {
 			ArrayList<Potterie> getProd = metier.getPotterie();
 			HttpSession session = request.getSession();
 			session.setAttribute("data", getProd);
-			request.getRequestDispatcher("userView.jsp").forward(request,response);
+//			request.getRequestDispatcher("userView.jsp").forward(request,response);
+			response.sendRedirect("search.do?nm=");
 		}else if(path.equals("/login.do")){
 			System.out.println(" enter to login doGet");
 			request.getRequestDispatcher("login.jsp").forward(request,response);
@@ -86,15 +91,22 @@ public class PotteryController extends HttpServlet {
 			session.setAttribute("data", prod);
 			session.setAttribute("images",imagelist);
 			session.setAttribute("count", countVote);
-			request.getRequestDispatcher("adminView.jsp").forward(request,response);
+			User u = new User();
+			if(u.getRole() == 1) {
+				request.getRequestDispatcher("adminView.jsp").forward(request,response);
+
+			}else if(u.getRole()== 2) {
+				request.getRequestDispatcher("userView.jsp").forward(request,response);
+			}
+//			request.getRequestDispatcher("adminView.jsp").forward(request,response);
 			
 		}else if(path.equals("/delete.do")) {
 			Long id = Long.parseLong(request.getParameter("id"));
 			System.out.println("the id to be deleted is: "+id);
 			
 			metier.delete(id);
-			//request.getRequestDispatcher("adminView.jsp").forward(request,response);
-			response.sendRedirect("search.do?nm=");
+			request.getRequestDispatcher("adminView.jsp").forward(request,response);
+//			response.sendRedirect("search.do?nm=");
 		}
 			else if(path.equals("/editPr.do")) {
 				//je recupere le id pr chercher le produit 
@@ -130,28 +142,10 @@ public class PotteryController extends HttpServlet {
 	        } 
 	        byte[] image = IOUtils.toByteArray(inputStream);
 			Potterie p = metier.save(new Potterie(nom, Integer.parseInt(quantite), Double.parseDouble(prix), image, desc));
-//			request.setAttribute("produit", p);
-			request.getRequestDispatcher("confirmation.jsp").forward(request,response);
-		}else if(path.equals("/addPottery.do")) {
-	 		Long id = Long.parseLong(request.getParameter("id"));
-			String nom = request.getParameter("nom");
-			String quantite = request.getParameter("quantite");
-			String prix = request.getParameter("prix");
-			String desc = request.getParameter("desc");
-			
-			InputStream inputStream = null;
-	        Part filePart = request.getPart("image");
-	        
-	        if (filePart != null) {
-	            inputStream = filePart.getInputStream();
-	        } 
-	        byte[] image = IOUtils.toByteArray(inputStream);
-			Potterie p = metier.save(new Potterie(id,  nom, Integer.parseInt(quantite), Double.parseDouble(prix), image, desc));
-			metier.updatePotterie(p);
 			request.setAttribute("p", p);
-			response.sendRedirect("search.do?nm=");
-		
-		}else if(path.equals("/upProducts.do")) {
+			request.getRequestDispatcher("confirmation.jsp").forward(request,response);
+		}		
+		else if(path.equals("/upProducts.do")) {
 			Long id =Long.parseLong(request.getParameter("id"));
 			String nom = request.getParameter("nom");
 			String quantite = request.getParameter("quantite");
@@ -169,8 +163,7 @@ public class PotteryController extends HttpServlet {
 				Potterie p = metier.updatePotterie(new Potterie(id, nom, Integer.parseInt(quantite), Double.parseDouble(prix), image, desc));
 				request.setAttribute("p", p);
 				response.sendRedirect("search.do?nm=");
-
-			
+	
 		}else if(path.equals("/login.do")){
 			System.out.println(" enter to login in doPost");
 			String email = request.getParameter("email");
@@ -188,7 +181,7 @@ public class PotteryController extends HttpServlet {
 		
 						request.getRequestDispatcher("adminView.jsp").forward(request,response);						
 						
-					}else {
+					}else if(p.getRole() == 2) {
 						// client
 						HttpSession session = request.getSession(true);
 	                    session.setAttribute("CURRENT_USER", p);

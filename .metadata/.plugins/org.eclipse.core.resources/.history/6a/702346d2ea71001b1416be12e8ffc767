@@ -1,0 +1,38 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+public class VoteForProductsImpl implements VoteDao {
+	
+	@Override
+	public void makeVote(int idUser, int idPrd) {
+		// TODO Auto-generated method stub
+		Connection connection = SingletonConnection.getConnection();
+
+		try {
+			PreparedStatement ps = connection.prepareStatement("INSERT INTO public.vote(\r\n"
+					+ "	personid, idproducts)\r\n"
+					+ "	VALUES (?, ?)");
+			
+			System.out.println(ps);
+			ps.setInt(1, idUser);
+			ps.setInt(2, idPrd);
+			ps.executeUpdate();
+			PreparedStatement ps2 = connection.prepareStatement("" +
+			                             "SELECT MAX(idproducts) as MAX_ID FROM products");
+			
+			ResultSet rs = ps2.executeQuery();
+
+			// fermer l'objet preparedStatement
+			ps.close();
+			ps2.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}

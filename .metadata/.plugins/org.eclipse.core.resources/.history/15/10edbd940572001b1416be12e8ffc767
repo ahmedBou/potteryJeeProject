@@ -1,0 +1,40 @@
+package metier.entities;
+
+public class Vote {
+	private Long personid;
+	private Long idproducts;
+	
+	private int countVote;
+	
+
+	public Vote(Long personid, Long idproducts) {
+		super();
+		this.personid = personid;
+		this.idproducts = idproducts;
+		countVote++;
+	}
+
+
+
+
+
+	
+	public Long getPersonid() {
+		return personid;
+	}
+	public void setPersonid(Long personid) {
+		this.personid = personid;
+	}
+	public Long getIdproducts() {
+		return idproducts;
+	}
+	public void setIdproducts(Long idproducts) {
+		this.idproducts = idproducts;
+	}
+	
+	@Override
+	public String toString() {
+		return "Vote [personid=" + personid + ", idproducts=" + idproducts + ", countVote=" + countVote + "]";
+	}
+
+}

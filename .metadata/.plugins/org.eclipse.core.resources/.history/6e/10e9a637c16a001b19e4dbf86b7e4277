@@ -1,7 +1,0 @@
-package dao;
-
-public class PotteryDao implements Potterie {
-	
-	
-
-}

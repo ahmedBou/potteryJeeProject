@@ -8,14 +8,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-	
+	<%@include file="header.jsp" %> 
 	<div class="container">
-		<img src="data:image/*;base64,${p[status.index].images}">
+	        	
 		<label>ID:</label>
-		ID:<label>"${p.idproducts}"</label>
-		NOM:<label>"${p.nom}"</label>
-		QUANTITE:<label>"${p.quantite}"</label>
-		PRIC:<label>"${p.prix}"</label>
+		${p.id} <br>
+		<label>NOM:</label>
+		${p.nom} <br>
+		<label>QUANTITE:</label>
+		${p.quantite} <br>
+		<label>PRIx:</label>
+		${p.prix}
 		
 	</div>
 

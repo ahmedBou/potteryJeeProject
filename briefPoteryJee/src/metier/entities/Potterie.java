@@ -1,8 +1,9 @@
 package metier.entities;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Potterie {
+public class Potterie implements Serializable{
 	private long id;
 	private String nom;
 	private int quantite;
@@ -77,15 +78,6 @@ public class Potterie {
 		return "Potterie [id=" + id + ", nom=" + nom + ", quantite=" + quantite + ", prix=" + prix + ", images="
 				+ Arrays.toString(images) + ", description=" + description + "]";
 	}
-	
-	
-
-	
-	
-
-
-
-	
 	
 
 }

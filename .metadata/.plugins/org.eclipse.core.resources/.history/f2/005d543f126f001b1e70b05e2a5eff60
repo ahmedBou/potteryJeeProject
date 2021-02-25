@@ -1,0 +1,102 @@
+package web;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
+
+import dao.PotterieDaoImpl;
+import metier.entities.Potterie;
+
+//
+@WebServlet("/getContents")
+@MultipartConfig(maxFileSize = 16177215)
+public class getContents extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	
+	PotterieDaoImpl metier = new PotterieDaoImpl();
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public getContents() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		String path = request.getServletPath();
+		System.out.println("the path is "+path);
+//		if(path.equals("/getContents")) {
+//		List<Potterie> listsPottery = new ArrayList<Potterie>();
+//		
+//		listsPottery = metier.getPotterie();
+//		List<String> imagelist = new ArrayList<String>();
+//	
+//
+////		listsPottery.forEach(record -> {
+////			System.out.println(record.toString());
+////		});
+//		for (Potterie p : listsPottery) {
+//			
+//			byte[] imageBytes = p.getImages();
+//			System.out.println(imageBytes);
+//			if(imageBytes != null) {
+//				imagelist.add(Base64.getEncoder().encodeToString(imageBytes));
+//			}else {
+//				System.out.println("not work");
+//			}
+//			
+//		
+//		request.setAttribute("LISTS_POTTERY", listsPottery);
+//		request.setAttribute("images", imagelist);
+//
+//		
+//		request.getRequestDispatcher("adminView.jsp").forward(request,response);
+		//}
+		
+        if(path.equals("/addPottery.do")){
+			String nom = request.getParameter("nom");
+			
+			int quantite = Integer.parseInt(request.getParameter("quantite"));
+			double prix = Double.parseDouble(request.getParameter("prix"));
+			String desc = request.getParameter("description");
+			InputStream inputStream = null;
+	        Part filePart = request.getPart("image");
+	        if (filePart != null) {
+	            inputStream = filePart.getInputStream();
+	        } 
+	        byte[] image = IOUtils.toByteArray(inputStream);
+			System.out.println("success");
+			Potterie p = metier.save(new Potterie(nom, quantite, prix, image, desc));
+//			response.sendRedirect("search.test?motCle=");
+			metier.save(p);
+			request.setAttribute("p", p);
+			request.getRequestDispatcher("adminView.jsp").forward(request,response);
+//			req.getRequestDispatcher("confirmation.jsp").forward(req, resp);
+			
+
+	}
+
+	}
+	}

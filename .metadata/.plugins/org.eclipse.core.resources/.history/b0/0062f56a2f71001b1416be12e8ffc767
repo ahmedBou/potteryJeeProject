@@ -1,0 +1,84 @@
+package dao;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class UsersLoginImpl
+ */
+@WebServlet("/UsersLoginImpl")
+public class UsersLoginImpl extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UsersLoginImpl() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
+
+
+
+
+//
+//package dao;
+//
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//
+//import javax.servlet.annotation.WebServlet;
+//
+//import metier.entities.User;
+//@WebServlet(name="cs",urlPatterns = {"*.do"})
+//public class UserLoginImpl implements UserLogin {
+//
+//	@Override
+//	public User userLogin(String username, String password) throws ClassNotFoundException, SQLException {
+//		Connection connection = null;
+//        PreparedStatement statement = null;
+//        ResultSet resultSet = null;
+//        User current_Person = null;
+//        try {
+//        	connection = SingletonConnection.getConnection();
+//        	String query_Authentication = "select * from person where email=? and password=?";
+//            statement = connection.prepareStatement(query_Authentication);
+//            statement.setString(1, username);
+//            statement.setString(2, password);
+//            resultSet = statement.executeQuery();
+//            if (resultSet.next()) {
+//            	current_Person = new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//       
+//        return current_Person;
+//	}
+//
+//}
+//

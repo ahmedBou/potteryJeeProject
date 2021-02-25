@@ -1,0 +1,15 @@
+package dao;
+
+import metier.entities.Vote;
+
+public class VoteForProductsImpl implements VoteDao {
+
+	@Override
+	public Vote getUserProductVote(int idUser, int idPrd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+}

@@ -16,13 +16,15 @@ public class UserLoginImpl implements UserLogin {
 		Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        User current_Person = null;
+        User current_Person = new User();
+        
         try {
         	connection = SingletonConnection.getConnection();
         	String query_Authentication = "select * from person where email=? and password=?";
             statement = connection.prepareStatement(query_Authentication);
             statement.setString(1, username);
             statement.setString(2, password);
+            
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
             	current_Person = new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6));
